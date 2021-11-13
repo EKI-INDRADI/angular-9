@@ -1,0 +1,356 @@
+<!-- <p>arr-list works!</p> -->
+
+
+<div fxLayout="column" fxLayoutAlign="start stretch" class="cards">
+    <div fxLayout="row" fxLayoutAlign="center">
+        <div fxFlex="90%" fxFlex.md="66.6667%" fxFlex.gt-md="50%">
+            <mat-card>
+                <mat-card-multi_object>
+                    <mat-card-title>
+                        <h2>To Do List ({{datasourceArrayList.length}})</h2>
+                    </mat-card-title>
+                    <br />
+                </mat-card-multi_object>
+                <mat-card-content>
+
+                    <mat-selection-list>
+                        <!-- scroll -->
+                        <mat-list role="list" mat-cell *ngFor="let row of datasourceArrayList ;let i = index;">
+                            <mat-list-item role="listitem">
+                                <!-- <b>No.</b>{{i}}&nbsp;&nbsp; -->
+                                <b>ID : </b> {{row.id}},
+                                <b>TASK : </b> {{row.task}},
+                                <b>COMPLETE : </b>{{row.complete}},
+                                &nbsp;
+                                <button mat-raised-button color="basicprimary"
+                                    (click)="controllerDeleteById(row.id)">DELETE</button>
+                                &nbsp;
+
+                                <ng-container *ngIf="row.complete == true else else_complete">
+                                    <button mat-raised-button color="warn"
+                                        (click)="controllerToIncompletedById(row.id)">TO
+                                        INCOMPLETE</button>
+                                </ng-container>
+
+                                <ng-template #else_complete>
+                                    <button mat-raised-button color="primary"
+                                        (click)="controllerToCompletedById(row.id)">TO
+                                        COMPLETED</button>
+                                </ng-template>
+
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-selection-list> <!-- scroll -->
+
+                 
+                </mat-card-content>
+            </mat-card>
+
+
+            <mat-card>
+                <mat-card-multi_object>
+                    <mat-card-title>
+                        <h2>Incomplete ({{datasourceArrayListIncomplete.length}}) <button mat-raised-button
+                                color="primary" (click)="controllerSetAllInCompleteToCompletedById()" >SET ALL INCOMPLETE TO COMPLETED</button></h2>
+                    </mat-card-title>
+                </mat-card-multi_object>
+                <mat-card-content>
+                    <mat-selection-list>
+                        <!-- scroll -->
+                        <mat-list role="list" mat-cell
+                            *ngFor="let row of datasourceArrayListIncomplete ;let i = index;">
+                            <mat-list-item role="listitem">
+                                <!-- <b>No.</b>{{i}}&nbsp;&nbsp; -->
+                                <b>ID : </b> {{row.id}},
+                                <b>TASK : </b> {{row.task}},
+                                <b>COMPLETE : </b>{{row.complete}},
+                                &nbsp;
+                                <button mat-raised-button color="basicprimary"
+                                    (click)="controllerDeleteById(row.id)">DELETE</button>
+                                &nbsp;
+
+                                <ng-container *ngIf="row.complete == true else else_complete">
+                                    <button mat-raised-button color="warn"
+                                        (click)="controllerToIncompletedById(row.id)">TO
+                                        INCOMPLETE</button>
+                                </ng-container>
+
+                                <ng-template #else_complete>
+                                    <button mat-raised-button color="primary"
+                                        (click)="controllerToCompletedById(row.id)">TO
+                                        COMPLETED</button>
+                                </ng-template>
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-selection-list> <!-- scroll -->
+
+                </mat-card-content>
+            </mat-card>
+
+            <mat-card>
+                <mat-card-multi_object>
+                    <mat-card-title>
+                        <h2>Completed 🎉 ({{datasourceArrayListComplete.length}}) <button mat-raised-button color="warn"
+                                (click)="controllerSetAllCompletedToIncompleteById()">SET ALL COMPLETE TO
+                                INCOMPLETE</button></h2>
+                    </mat-card-title>
+                </mat-card-multi_object>
+                <mat-card-content>
+
+                    <mat-selection-list>
+                        <!-- scroll -->
+                        <mat-list role="list" mat-cell *ngFor="let row of datasourceArrayListComplete ;let i = index;">
+                            <mat-list-item role="listitem">
+                                <!-- <b>No.</b>{{i}}&nbsp;&nbsp; -->
+                                <b>ID : </b> {{row.id}},
+                                <b>TASK : </b> {{row.task}},
+                                <b>COMPLETE : </b>{{row.complete}},
+                                &nbsp;
+                                <button mat-raised-button color="basicprimary"
+                                    (click)="controllerDeleteById(row.id)">DELETE</button>
+                                &nbsp;
+
+                                <ng-container *ngIf="row.complete == true else else_complete">
+                                    <button mat-raised-button color="warn"
+                                        (click)="controllerToIncompletedById(row.id)">TO
+                                        INCOMPLETE</button>
+                                </ng-container>
+
+                                <ng-template #else_complete>
+                                    <button mat-raised-button color="primary"
+                                        (click)="controllerToCompletedById(row.id)">TO
+                                        COMPLETED</button>
+                                </ng-template>
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-selection-list> <!-- scroll -->
+
+                </mat-card-content>
+            </mat-card>
+
+
+
+            <mat-card>
+                <mat-card-multi_object>
+                    <mat-card-title>
+                        <h2>Add To Do</h2>
+                    </mat-card-title>
+                </mat-card-multi_object>
+                <mat-card-content>
+
+
+
+
+                    <!---------------------MULTI OBJECT -->
+                    <h2>Add Multi Object</h2>
+                    <form [formGroup]="multi_object_form_group">
+                        <mat-card>
+                            <div class="form-row">
+                                <div class="form-group">
+
+                                    <div align="left">
+                                        <button mat-raised-button color="primary" (click)="new_multi_object()">New
+                                            object</button>
+                                        &nbsp;
+                                        <button mat-raised-button color="primary" (click)="onClear_header()">Clear value
+                                            all object</button>
+                                        &nbsp;
+                                        <button mat-raised-button color="primary"
+                                            (click)="onReset_multi_object()">Remove all object</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </mat-card>
+
+
+
+                        <div *ngFor="let arr_multi_object_html of get_return_multi_object_arr.controls; let i = index">
+                            <div [formGroup]="arr_multi_object_html" class="form-row">
+                                <mat-card>
+
+                                    <mat-card-title> object index : {{i}}</mat-card-title>
+
+                                    <mat-grid-list cols="4" rowHeight="30px" rowWidth="100px">
+                                        <!-------------------------->
+                                        <!-- <mat-grid-tile>
+
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>id</mat-label>
+                                                <input matInput formControlName="id"
+                                                    [ngClass]="{ 'is-invalid': submitted && arr_multi_object_html.controls.id.errors }">
+                                                <div *ngIf="submitted && arr_multi_object_html.controls.id.errors">
+                                                    <div *ngIf="arr_multi_object_html.controls.id.errors.required">id is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </mat-grid-tile> -->
+
+                                        <mat-grid-tile>
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>task</mat-label>
+                                                <input matInput formControlName="task"
+                                                    [ngClass]="{ 'is-invalid': submitted && arr_multi_object_html.controls.task.errors }" />
+                                                <div *ngIf="submitted && arr_multi_object_html.controls.task.errors"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="arr_multi_object_html.controls.task.errors.required">
+                                                        task is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </mat-grid-tile>
+                                        <mat-grid-tile>
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>complete</mat-label>
+
+                                                <mat-select formControlName="complete"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <mat-option *ngFor="let row of arr_complete" [value]="row.value">
+                                                        {{row.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+
+
+
+                                                <div *ngIf="submitted && arr_multi_object_html.controls.complete.errors"
+                                                    class="invalid-feedback">
+                                                    <div
+                                                        *ngIf="arr_multi_object_html.controls.complete.errors.required">
+                                                        complete isrequired
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+
+                                        </mat-grid-tile>
+                                        <!-------------------------->
+
+                                        <!-------------------------->
+                                        <mat-grid-tile>
+
+                                            <button mat-raised-button color="primary" (click)="remove_object_func(i)">
+                                                Remove object [{{i}}]
+                                            </button>
+                                            &nbsp;
+                   
+                                        </mat-grid-tile>
+                                        <!-------------------------->
+                                    </mat-grid-list>
+
+                                </mat-card>
+
+                            </div>
+
+
+                        </div>
+                        <!---  end form group-->
+
+                        <br>
+
+
+                        <mat-card>
+                            <div fxLayout="row" fxLayoutAlign="end">
+                                <button mat-raised-button color="primary"
+                                    (click)="controllerAddMultiArrList(multi_object_form_group.value)">Add To Do (multi
+                                    object)</button>
+                            </div>
+
+                        </mat-card>
+
+                    </form>
+
+                    <br>
+
+                    <!-- <mat-card>
+                        <ngx-json-viewer [json]="multi_object_form_group.value"></ngx-json-viewer>
+                    </mat-card> -->
+
+
+
+                    <!---------------------/MULTI OBJECT -->
+                    <h2>Add Single Object</h2>
+                    <!---------------------SIGNLE OBJECT -->
+
+
+
+                    <form class="example-form">
+                        <mat-card>
+                            <mat-grid-list cols="4" rowHeight="30px" rowWidth="100px">
+                                <!-------------------------->
+                                <!-- <mat-grid-tile>
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="id" value="0" [(ngModel)]="id_value"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </mat-form-field>
+                                </mat-grid-tile> -->
+
+
+                                <mat-grid-tile>
+
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="task" value="0" [(ngModel)]="task_value"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </mat-form-field>
+                                </mat-grid-tile>
+
+
+                                <mat-grid-tile>
+
+                                    <mat-form-field>
+                                        <mat-select [(ngModel)]="complete_value" [ngModelOptions]="{standalone: true}">
+                                            <mat-option *ngFor="let row of arr_complete" [value]="row.value">
+                                                {{row.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </mat-grid-tile>
+
+
+                            </mat-grid-list>
+
+
+                        </mat-card>
+                    </form>
+
+
+                    <br>
+                    <mat-card>
+                        <div fxLayout="row" fxLayoutAlign="end">
+                            <button mat-raised-button color="primary" (click)="controllerAddArrList()">Add To Do
+                                (Single
+                                object)</button>
+                        </div>
+                    </mat-card>
+
+
+                    <!---------------------/SIGNLE OBJECT -->
+
+
+                </mat-card-content>
+            </mat-card>
+
+
+
+
+            <mat-card>
+                <mat-card-multi_object>
+                    <mat-card-title>
+                        <h2> </h2>
+                    </mat-card-title>
+                </mat-card-multi_object>
+                <mat-card-content>
+
+
+                </mat-card-content>
+            </mat-card>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
